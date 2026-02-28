@@ -7,10 +7,5 @@ institution: "Gymnasium -- Mathematics"
 
 exercise-reset-per-chapter: true
 
-format:
-  typst:
-    include-before-body:
-      - path: ../../shared/styles/lecture.typ
-
 filters:
   - ../../shared/filters/exercise-solutions.lua

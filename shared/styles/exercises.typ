@@ -6,7 +6,9 @@
 // ║  Override with flipped: false in exercises.qmd for portrait.            ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
 
-#import "shared.typ": *
+// NOTE: shared.typ is imported by the caller (.qmd file) before this file.
+// Typst resolves imports relative to the importing file's location, so
+// importing shared.typ here would fail when called from a topic subfolder.
 
 #let setup-exercises(
   topic-key,

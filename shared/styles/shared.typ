@@ -66,9 +66,12 @@
 // ── 4. TYPOGRAPHY CONSTANTS ───────────────────────────────────────────────────
 
 #let font = (
-  body:   "Linux Libertine",
-  sans:   "Linux Biolinum",
-  mono:   "JetBrains Mono",
+  // System-safe fonts available on macOS, Windows, and Linux.
+  // macOS: "Georgia" (serif), "Helvetica Neue" (sans), "Menlo" (mono)
+  // Override these in your topic file if you have other fonts installed.
+  body:   "Georgia",
+  sans:   "Helvetica Neue",
+  mono:   "Menlo",
   size:   11pt,
   small:  8.5pt,
   large:  13pt,
@@ -179,7 +182,7 @@
 // ── Example ───────────────────────────────────────────────────────────────────
 #let example-box(palette, body) = block(
   width:  100%,
-  fill:   palette.ultralight.mix(white, 40%),
+  fill:   color.mix((palette.ultralight, 60%), (white, 40%)),
   stroke: (left: 2pt + palette.muted),
   inset:  (left: 14pt, rest: 10pt),
   radius: (right: 3pt),
@@ -211,7 +214,7 @@
 // Exercise body wrapper — sits directly below the header bar
 #let ex-body(palette, body) = block(
   width:  100%,
-  fill:   palette.ultralight.mix(white, 60%),
+  fill:   color.mix((palette.ultralight, 60%), (white, 40%)),
   stroke: (
     left:   1pt + palette.muted,
     right:  1pt + palette.muted,

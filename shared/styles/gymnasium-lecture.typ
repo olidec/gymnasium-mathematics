@@ -1,15 +1,22 @@
----
-title: "Vectors & Linear Algebra -- Lecture Notes"
-date: last-modified
-date-format: "DD MMMM YYYY"
-format:
-  typst:
-    toc: true
-    toc-depth: 3
-    number-sections: true
----
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  gymnasium-lecture.typ                                                   ║
+// ║  Fully self-contained style file for Gymnasium Mathematics              ║
+// ║  lecture notes. Referenced via include-before-body in lecture.qmd.     ║
+// ║                                                                          ║
+// ║  This file is intentionally self-contained — it does not #import any   ║
+// ║  other local files. All shared code is inlined here to avoid Typst     ║
+// ║  path-resolution issues when compiled from topic subfolders.            ║
+// ║                                                                          ║
+// ║  USAGE in lecture.qmd:                                                  ║
+// ║    format:                                                               ║
+// ║      typst:                                                              ║
+// ║        include-before-body: ../../shared/styles/gymnasium-lecture.typ   ║
+// ║                                                                          ║
+// ║  Then call setup-lecture() and get-palette() directly in the body:      ║
+// ║    #setup-lecture("algebra", "Algebra", "Gymnasium -- Mathematics")     ║
+// ║    #let p = get-palette("algebra")                                      ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
 
-```{=typst}
 // ╔══════════════════════════════════════════════════════════════════════════╗
 // ║  shared.typ                                                              ║
 // ║  Central style library — Gymnasium Mathematics                          ║
@@ -78,12 +85,9 @@ format:
 // ── 4. TYPOGRAPHY CONSTANTS ───────────────────────────────────────────────────
 
 #let font = (
-  // System-safe fonts available on macOS, Windows, and Linux.
-  // macOS: "Georgia" (serif), "Helvetica Neue" (sans), "Menlo" (mono)
-  // Override these in your topic file if you have other fonts installed.
-  body:   "Georgia",
-  sans:   "Helvetica Neue",
-  mono:   "Menlo",
+  body:   "Linux Libertine",
+  sans:   "Linux Biolinum",
+  mono:   "JetBrains Mono",
   size:   11pt,
   small:  8.5pt,
   large:  13pt,
@@ -194,7 +198,7 @@ format:
 // ── Example ───────────────────────────────────────────────────────────────────
 #let example-box(palette, body) = block(
   width:  100%,
-  fill:   color.mix((palette.ultralight, 60%), (white, 40%)),
+  fill:   palette.ultralight.mix(white, 40%),
   stroke: (left: 2pt + palette.muted),
   inset:  (left: 14pt, rest: 10pt),
   radius: (right: 3pt),
@@ -226,7 +230,7 @@ format:
 // Exercise body wrapper — sits directly below the header bar
 #let ex-body(palette, body) = block(
   width:  100%,
-  fill:   color.mix((palette.ultralight, 60%), (white, 40%)),
+  fill:   palette.ultralight.mix(white, 60%),
   stroke: (
     left:   1pt + palette.muted,
     right:  1pt + palette.muted,
@@ -474,6 +478,8 @@ format:
 }
 
 
+// ── LECTURE PAGE SETUP ────────────────────────────────────────────────────────
+
 // setup-lecture is called once at the top of every lecture notes document.
 // topic-key    : must match a key in topic-colours  e.g. "algebra"
 // topic-title  : display name shown in header       e.g. "Algebra"
@@ -554,26 +560,3 @@ format:
 
   set heading(numbering: "1.1.1")
 }
-
-#setup-lecture("vectors", "Vectors & Linear Algebra", "Gymnasium -- Mathematics")
-#let p = get-palette("vectors")
-```
-
-<!-- Vectors & Linear Algebra -- Lecture Notes -->
-
-# Introduction
-
-## Overview
-
-Content goes here.
-
-::: {.exercise}
-First exercise.
-
-::: {.solution}
-First solution.
-:::
-:::
-
-::: {.solutions-list}
-:::

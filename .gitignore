@@ -13,3 +13,6 @@ _output/
 
 # Typst cache
 .typst/
+
+/.quarto/
+**/*.quarto_ipynb

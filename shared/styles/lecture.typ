@@ -7,7 +7,9 @@
 // ║  derived automatically from shared.typ.                                 ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
 
-#import "shared.typ": *
+// NOTE: shared.typ is imported by the caller (.qmd file) before this file.
+// Typst resolves imports relative to the importing file's location, so
+// importing shared.typ here would fail when called from a topic subfolder.
 
 // setup-lecture is called once at the top of every lecture notes document.
 // topic-key    : must match a key in topic-colours  e.g. "algebra"

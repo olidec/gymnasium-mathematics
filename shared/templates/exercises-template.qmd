@@ -1,34 +1,21 @@
 ---
 # ── EXERCISE SHEET TEMPLATE ───────────────────────────────────────────────────
-# Copy this file's front matter into your topic's exercises.qmd.
-# Replace all values marked with ← EDIT.
-
-title: "Topic Title — Exercises"               # ← EDIT
-topic-key: "algebra"                           # ← EDIT
-topic-title: "Algebra"                         # ← EDIT
-institution: "Gymnasium — Mathematics"         # ← EDIT
-
-# Landscape is default (optimised for screens and tablets)
-# Set to false for portrait (better for printing)
-exercise-landscape: true
+title: "TOPIC-TITLE -- Exercises"
 exercise-blank-pages: true
 exercise-show-sections: true
-exercise-reset-per-chapter: true
-
 format:
   typst:
     toc: false
     papersize: a4
-    include-before-body:
-      - path: ../../shared/styles/exercises.typ
-
 filters:
   - ../../shared/filters/extract-exercises.lua
 ---
 
 ```{=typst}
-#setup-exercises("algebra", "Algebra", "Gymnasium — Mathematics", landscape: true)
-#let p = get-palette("algebra")
+// (same inlined style block as lecture.qmd — copy from there)
+// Then call:
+#setup-exercises("TOPIC-KEY", "TOPIC-TITLE", "Gymnasium -- Mathematics", landscape: true)
+#let p = get-palette("TOPIC-KEY")
 ```
 
 {{< include lecture.qmd >}}
