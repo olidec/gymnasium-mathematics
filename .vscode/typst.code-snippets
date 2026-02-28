@@ -1,0 +1,159 @@
+{
+  // ── Number sets ─────────────────────────────────────────────────────────────
+  "Natural numbers": {
+    "prefix": "NN",
+    "body": "#NN",
+    "description": "Natural numbers ℕ"
+  },
+  "Integers": {
+    "prefix": "ZZ",
+    "body": "#ZZ",
+    "description": "Integers ℤ"
+  },
+  "Rationals": {
+    "prefix": "QQ",
+    "body": "#QQ",
+    "description": "Rational numbers ℚ"
+  },
+  "Reals": {
+    "prefix": "RR",
+    "body": "#RR",
+    "description": "Real numbers ℝ"
+  },
+  "Complex": {
+    "prefix": "CC",
+    "body": "#CC",
+    "description": "Complex numbers ℂ"
+  },
+
+  // ── Complex notation ─────────────────────────────────────────────────────────
+  "Imaginary unit": {
+    "prefix": "iu",
+    "body": "#iu",
+    "description": "Imaginary unit (bold i)"
+  },
+  "Real part": {
+    "prefix": "RE",
+    "body": "#RE",
+    "description": "Real part operator"
+  },
+  "Imaginary part": {
+    "prefix": "IM",
+    "body": "#IM",
+    "description": "Imaginary part operator"
+  },
+
+  // ── Arrows ───────────────────────────────────────────────────────────────────
+  "Implies arrow": {
+    "prefix": "qrq",
+    "body": "#qrq",
+    "description": "Double implies arrow (therefore)"
+  },
+
+  // ── Box environments ─────────────────────────────────────────────────────────
+  "Definition box": {
+    "prefix": "defbox",
+    "body": "#definition-box(p)[\n  $1\n]",
+    "description": "Definition box (topic coloured)"
+  },
+  "Theorem box": {
+    "prefix": "thmbox",
+    "body": "#theorem-box(p)[\n  $1\n]",
+    "description": "Theorem box"
+  },
+  "Proof box": {
+    "prefix": "proofbox",
+    "body": "#proof-box[\n  $1\n]",
+    "description": "Proof environment with QED"
+  },
+  "Attention box": {
+    "prefix": "attbox",
+    "body": "#attention-box[\n  $1\n]",
+    "description": "Attention / warning box (always amber)"
+  },
+  "Example box": {
+    "prefix": "exbox",
+    "body": "#example-box(p)[\n  $1\n]",
+    "description": "Example box (topic coloured)"
+  },
+
+  // ── Exercise environments ────────────────────────────────────────────────────
+  "Exercise block": {
+    "prefix": "exer",
+    "body": "::: {.exercise}\n$1\n\n::: {.solution}\n$2\n:::\n:::",
+    "description": "Exercise with nested solution"
+  },
+  "Exercise with title": {
+    "prefix": "exert",
+    "body": "::: {.exercise title=\"$1\"}\n$2\n\n::: {.solution}\n$3\n:::\n:::",
+    "description": "Named exercise with solution"
+  },
+  "Exercise with YouTube video": {
+    "prefix": "exeryt",
+    "body": "::: {.exercise yt=\"$1\"}\n$2\n\n::: {.solution}\n$3\n:::\n:::",
+    "description": "Exercise with YouTube solution QR code"
+  },
+  "Solutions list marker": {
+    "prefix": "sollist",
+    "body": "::: {.solutions-list}\n:::",
+    "description": "Marker where solutions are rendered"
+  },
+
+  // ── Column layouts ───────────────────────────────────────────────────────────
+  "Two columns": {
+    "prefix": "cols2",
+    "body": "```{=typst}\n#cols2[\n  $1\n]\n```",
+    "description": "Two-column layout"
+  },
+  "Three columns": {
+    "prefix": "cols3",
+    "body": "```{=typst}\n#cols3[\n  $1\n]\n```",
+    "description": "Three-column layout"
+  },
+  "Four columns": {
+    "prefix": "cols4",
+    "body": "```{=typst}\n#cols4[\n  $1\n]\n```",
+    "description": "Four-column layout"
+  },
+  "Lettered sub-exercises": {
+    "prefix": "subex",
+    "body": "```{=typst}\n#subex[\n  $1\n][\n  $2\n]\n```",
+    "description": "a) b) sub-exercise list"
+  },
+  "Columnar sub-exercises": {
+    "prefix": "subexc",
+    "body": "```{=typst}\n#subex-cols(cols: ${1:2})[\n  $2\n][\n  $3\n]\n```",
+    "description": "Multi-column lettered sub-exercise list"
+  },
+
+  // ── Figures ──────────────────────────────────────────────────────────────────
+  "Centred figure": {
+    "prefix": "cfig",
+    "body": "```{=typst}\n#cent-fig(${1:0.7}, \"images/$2\")\n```",
+    "description": "Centred image at given width fraction"
+  },
+  "Centred figure with caption": {
+    "prefix": "cfigc",
+    "body": "```{=typst}\n#cent-fig(${1:0.7}, \"images/$2\", caption: [$3])\n```",
+    "description": "Centred image with caption"
+  },
+  "Source note": {
+    "prefix": "src",
+    "body": "```{=typst}\n#source(\"$1\")\n```",
+    "description": "Informal source attribution"
+  },
+
+  // ── Plots ────────────────────────────────────────────────────────────────────
+  "Function plot": {
+    "prefix": "plot",
+    "body": "```{=typst}\n#math-plot(\n  x-min: ${1:-5}, x-max: ${2:5},\n  y-min: ${3:-5}, y-max: ${4:5},\n  curves: (\n    (fn: x => $5, label: $$6$, stroke: p.base + 1.5pt),\n  )\n)\n```",
+    "description": "CeTZ function plot"
+  },
+
+  // ── QR codes ─────────────────────────────────────────────────────────────────
+  "QR code link": {
+    "prefix": "qr",
+    "body": "```{=typst}\n#sol-qr(\"https://youtu.be/$1\")\n```",
+    "description": "YouTube solution QR code"
+  }
+}

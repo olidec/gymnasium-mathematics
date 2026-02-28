@@ -1,0 +1,16 @@
+# Topic: Trigonometry & Geometry
+# All .qmd files in this folder inherit these settings.
+
+topic-key: "trigonometry"
+topic-title: "Trigonometry & Geometry"
+institution: "Gymnasium -- Mathematics"
+
+exercise-reset-per-chapter: true
+
+format:
+  typst:
+    include-before-body:
+      - path: ../../shared/styles/lecture.typ
+
+filters:
+  - ../../shared/filters/exercise-solutions.lua

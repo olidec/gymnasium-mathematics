@@ -1,0 +1,22 @@
+---
+title: "Sequences & Series -- Exercises"
+exercise-blank-pages: true
+exercise-show-sections: true
+format:
+  typst:
+    toc: false
+    papersize: a4
+    include-before-body:
+      - path: ../../shared/styles/exercises.typ
+filters:
+  - ../../shared/filters/extract-exercises.lua
+---
+
+```{=typst}
+#import "../../shared/styles/shared.typ": *
+#import "../../shared/styles/exercises.typ": *
+#setup-exercises("sequences", "Sequences & Series", "Gymnasium -- Mathematics", landscape: true)
+#let p = get-palette("sequences")
+```
+
+{{< include lecture.qmd >}}

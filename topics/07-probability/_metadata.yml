@@ -1,0 +1,16 @@
+# Topic: Probability & Combinatorics
+# All .qmd files in this folder inherit these settings.
+
+topic-key: "probability"
+topic-title: "Probability & Combinatorics"
+institution: "Gymnasium -- Mathematics"
+
+exercise-reset-per-chapter: true
+
+format:
+  typst:
+    include-before-body:
+      - path: ../../shared/styles/lecture.typ
+
+filters:
+  - ../../shared/filters/exercise-solutions.lua

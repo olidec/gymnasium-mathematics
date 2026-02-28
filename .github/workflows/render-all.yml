@@ -1,0 +1,33 @@
+name: Render entire curriculum
+
+on:
+  workflow_dispatch:    # manual trigger only
+  schedule:
+    - cron: '0 4 * * 0'  # optional: every Sunday at 04:00 UTC
+
+jobs:
+  render-all:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: pre-release
+
+      - name: Install Typst
+        run: |
+          TYPST_VERSION=$(curl -s https://api.github.com/repos/typst/typst/releases/latest \
+            | jq -r '.tag_name')
+          curl -LO "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz"
+          tar -xf typst-x86_64-unknown-linux-musl.tar.xz
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
+
+      - name: Render entire curriculum
+        run: quarto render
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_output

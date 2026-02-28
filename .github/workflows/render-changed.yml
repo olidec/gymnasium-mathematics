@@ -1,0 +1,111 @@
+name: Render changed topics
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # ── Detect which topics changed ──────────────────────────────────────────────
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      topics:      ${{ steps.changes.outputs.topics }}
+      shared-changed: ${{ steps.changes.outputs.shared }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed files
+        id: changes
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          # Check if shared/ or _quarto.yml changed
+          if echo "$CHANGED_FILES" | grep -qE '^(shared/|_quarto\.yml)'; then
+            echo "shared=true" >> $GITHUB_OUTPUT
+          else
+            echo "shared=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Extract unique changed topic folders
+          TOPICS=$(echo "$CHANGED_FILES" \
+            | grep '^topics/' \
+            | cut -d/ -f1-2 \
+            | sort -u \
+            | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "topics=$TOPICS" >> $GITHUB_OUTPUT
+
+  # ── Full re-render when shared/ changes ──────────────────────────────────────
+  render-all:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.shared-changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: pre-release
+
+      - name: Install Typst
+        run: |
+          TYPST_VERSION=$(curl -s https://api.github.com/repos/typst/typst/releases/latest \
+            | jq -r '.tag_name')
+          curl -LO "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz"
+          tar -xf typst-x86_64-unknown-linux-musl.tar.xz
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
+
+      - name: Render entire curriculum
+        run: quarto render
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_output
+
+  # ── Render only changed topics ────────────────────────────────────────────────
+  render-topics:
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.shared-changed == 'false' &&
+      needs.detect-changes.outputs.topics != '[]' &&
+      needs.detect-changes.outputs.topics != ''
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        topic: ${{ fromJson(needs.detect-changes.outputs.topics) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: pre-release
+
+      - name: Install Typst
+        run: |
+          TYPST_VERSION=$(curl -s https://api.github.com/repos/typst/typst/releases/latest \
+            | jq -r '.tag_name')
+          curl -LO "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz"
+          tar -xf typst-x86_64-unknown-linux-musl.tar.xz
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
+
+      - name: Render topic
+        run: quarto render ${{ matrix.topic }}
+
+      - name: Create GitHub Release with PDFs
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "${{ matrix.topic }}-${{ github.run_number }}"
+          name: "${{ matrix.topic }} (build ${{ github.run_number }})"
+          files: "_output/${{ matrix.topic }}/*.pdf"
+          generate_release_notes: false

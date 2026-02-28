@@ -1,0 +1,37 @@
+---
+title: "Calculus -- Lecture Notes"
+date: last-modified
+date-format: "DD MMMM YYYY"
+format:
+  typst:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+```{=typst}
+#import "../../shared/styles/shared.typ": *
+#import "../../shared/styles/lecture.typ": *
+#setup-lecture("calculus", "Calculus", "Gymnasium -- Mathematics")
+#let p = get-palette("calculus")
+```
+
+<!-- Calculus Lecture Notes
+     See shared/templates/lecture-template.qmd for environment usage. -->
+
+# Introduction
+
+## Overview
+
+Content goes here.
+
+::: {.exercise}
+First exercise.
+
+::: {.solution}
+First solution.
+:::
+:::
+
+::: {.solutions-list}
+:::

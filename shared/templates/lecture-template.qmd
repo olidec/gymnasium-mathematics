@@ -1,0 +1,45 @@
+---
+# ── LECTURE NOTES TEMPLATE ────────────────────────────────────────────────────
+# Copy this file's front matter into your topic's lecture.qmd.
+# Replace all values marked with ← EDIT.
+
+title: "Topic Title — Lecture Notes"           # ← EDIT
+author: "Your Name"                            # ← EDIT
+date: last-modified
+date-format: "DD MMMM YYYY"
+
+# Must match a key in shared/styles/shared.typ topic-colours
+topic-key: "algebra"                           # ← EDIT
+topic-title: "Algebra"                         # ← EDIT
+institution: "Gymnasium — Mathematics"         # ← EDIT (or set in _metadata.yml)
+
+exercise-reset-per-chapter: true
+
+format:
+  typst:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    papersize: a4
+    include-before-body:
+      - path: ../../shared/styles/lecture.typ  # ← adjust depth if needed
+
+filters:
+  - ../../shared/filters/exercise-solutions.lua
+---
+
+<!-- 
+  Call setup-lecture once at the top of the document body.
+  topic-key and topic-title must match your _metadata.yml values.
+-->
+
+```{=typst}
+#setup-lecture("algebra", "Algebra", "Gymnasium — Mathematics")
+#let p = get-palette("algebra")
+```
+
+# Chapter Title
+
+## Section Title
+
+Content goes here.

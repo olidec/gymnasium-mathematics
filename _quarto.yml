@@ -1,0 +1,26 @@
+project:
+  type: default
+  output-dir: _output
+  render:
+    - "topics/**/*.qmd"
+
+execute:
+  echo: false
+
+format:
+  typst:
+    papersize: a4
+    fontsize: 11pt
+
+# Per-file filter and style configuration is declared in:
+#   - topics/XX-topic/_metadata.yml  (topic-level, inherited by all files)
+#   - topics/XX-topic/lecture.qmd    (file-specific overrides)
+#   - topics/XX-topic/exercises.qmd  (file-specific overrides)
+#
+# Shared styles live in:  shared/styles/
+# Shared filters live in: shared/filters/
+#
+# Rendering:
+#   quarto render                              # entire curriculum
+#   quarto render topics/01-algebra/           # single topic
+#   quarto render topics/01-algebra/lecture.qmd  # single file

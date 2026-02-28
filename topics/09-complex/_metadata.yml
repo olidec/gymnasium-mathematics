@@ -1,0 +1,16 @@
+# Topic: Complex Numbers
+# All .qmd files in this folder inherit these settings.
+
+topic-key: "complex"
+topic-title: "Complex Numbers"
+institution: "Gymnasium -- Mathematics"
+
+exercise-reset-per-chapter: true
+
+format:
+  typst:
+    include-before-body:
+      - path: ../../shared/styles/lecture.typ
+
+filters:
+  - ../../shared/filters/exercise-solutions.lua

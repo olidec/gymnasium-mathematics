@@ -1,0 +1,16 @@
+# Topic: Statistics
+# All .qmd files in this folder inherit these settings.
+
+topic-key: "statistics"
+topic-title: "Statistics"
+institution: "Gymnasium -- Mathematics"
+
+exercise-reset-per-chapter: true
+
+format:
+  typst:
+    include-before-body:
+      - path: ../../shared/styles/lecture.typ
+
+filters:
+  - ../../shared/filters/exercise-solutions.lua
