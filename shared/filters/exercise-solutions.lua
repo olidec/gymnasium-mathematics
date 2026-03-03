@@ -11,6 +11,14 @@
   - YouTube QR codes on solutions via yt= attribute (or yt-a=, yt-b= for sub-parts)
   - Section-scoped solution lists via section= attribute on {.solutions-list}
 
+  EXERCISE APPEARANCE
+  -------------------
+  Exercises are rendered as a simple bold label followed by content —
+  no box, no background, no border. This keeps the page clean and
+  avoids visual clutter when exercises appear frequently.
+
+  Solutions only appear at the {.solutions-list} marker, never inline.
+
   SYNTAX
   ------
   Basic exercise:
@@ -34,7 +42,7 @@
     ...
     :::
 
-  Solutions list marker (place anywhere — end of section or chapter):
+  Solutions list marker:
     ::: {.solutions-list}
     :::
 
@@ -56,11 +64,9 @@ local function yt_url(hash)
   return YT_BASE .. hash
 end
 
--- Build a list of QR blocks from yt attributes on an exercise element
 local function make_qr_blocks(attrs)
   local blocks = {}
 
-  -- Single video: yt="HASH"
   if attrs["yt"] and attrs["yt"] ~= "" then
     table.insert(blocks,
       pandoc.RawBlock("typst",
@@ -69,13 +75,12 @@ local function make_qr_blocks(attrs)
     )
   end
 
-  -- Sub-part videos: yt-a="HASH" yt-b="HASH" ...
   for _, letter in ipairs({"a","b","c","d","e","f"}) do
     local key = "yt-" .. letter
     if attrs[key] and attrs[key] ~= "" then
       table.insert(blocks,
         pandoc.RawBlock("typst",
-          '#sol-qr("' .. yt_url(attrs[key]) .. '", label: "' .. letter .. ')")'
+          '#sol-qr("' .. yt_url(attrs[key]) .. '", label: "' .. letter .. '")'
         )
       )
     end
@@ -126,7 +131,7 @@ function Div(el)
       end
     end
 
-    -- Store record
+    -- Store record for later emission at {.solutions-list}
     table.insert(all_exercises, {
       number           = n,
       title            = title,
@@ -136,17 +141,19 @@ function Div(el)
       attrs            = attrs,
     })
 
-    -- Emit exercise with header bar and body wrapper
+    -- Emit exercise as a simple label + content, no box
     local title_arg = title and ('"' .. title .. '"') or "none"
     local out = {}
+
+    -- Minimal exercise label: "Exercise 3." or "Exercise 3. — Title"
     table.insert(out,
       pandoc.RawBlock("typst",
-        "#ex-header(p, " .. tostring(n) .. ", " .. title_arg .. ")"
+        "#ex-label(p, " .. tostring(n) .. ", " .. title_arg .. ")"
       )
     )
-    table.insert(out,
-      pandoc.RawBlock("typst", "#ex-body(p, [")
-    )
+
+    -- Exercise content flows directly, indented slightly with a left rule
+    table.insert(out, pandoc.RawBlock("typst", "#ex-content(["))
     for _, b in ipairs(exercise_blocks) do
       table.insert(out, b)
     end
@@ -160,7 +167,6 @@ function Div(el)
     local section_filter = el.attributes["section"] or nil
     local result = {}
 
-    -- Heading
     table.insert(result,
       pandoc.Header(3, {pandoc.Str("Solutions")},
         pandoc.Attr("", {"solutions-heading"}, {}))
@@ -178,25 +184,20 @@ function Div(el)
         found_any = true
         local title_arg = ex.title and ('"' .. ex.title .. '"') or "none"
 
-        -- Solution header
         table.insert(result,
           pandoc.RawBlock("typst",
             "#sol-header(p, " .. tostring(ex.number) .. ", " .. title_arg .. ")"
           )
         )
-        -- Solution body open
         table.insert(result,
           pandoc.RawBlock("typst", "#sol-body(p, [")
         )
-        -- Solution content
         for _, b in ipairs(ex.solution_content) do
           table.insert(result, b)
         end
-        -- QR codes for YouTube solution videos
         for _, qr in ipairs(make_qr_blocks(ex.attrs)) do
           table.insert(result, qr)
         end
-        -- Solution body close
         table.insert(result,
           pandoc.RawBlock("typst", "])")
         )

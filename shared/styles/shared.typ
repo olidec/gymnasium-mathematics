@@ -197,32 +197,23 @@
 
 
 // ── 7. EXERCISE ENVIRONMENTS ──────────────────────────────────────────────────
+// Exercises are intentionally lightweight — a bold numbered label followed
+// by content with a thin left rule. No box, no fill, no clutter.
 
-// Exercise header bar — called by the Lua filter output
-#let ex-header(palette, n, title) = block(
-  width:  100%,
-  fill:   palette.dark,
-  radius: (top: 4pt),
-  inset:  (x: 12pt, y: 8pt),
-  above:  1.2em,
-  below:  0pt,
-  text(fill: white, weight: "bold", size: font.size)[
-    Exercise #n#if title != none [#h(0.4em)—#h(0.4em)#title]
+// Bold numbered label: "Exercise 3." or "Exercise 3. — Title"
+#let ex-label(palette, n, title) = {
+  v(0.9em)
+  text(weight: "bold", fill: palette.dark)[
+    Exercise #n.#if title != none [#h(0.3em)---#h(0.3em)#title]
   ]
-)
+}
 
-// Exercise body wrapper — sits directly below the header bar
-#let ex-body(palette, body) = block(
+// Content block: subtle left rule for visual grouping, no fill
+#let ex-content(body) = block(
   width:  100%,
-  fill:   color.mix((palette.ultralight, 60%), (white, 40%)),
-  stroke: (
-    left:   1pt + palette.muted,
-    right:  1pt + palette.muted,
-    bottom: 1pt + palette.muted,
-  ),
-  radius: (bottom: 4pt),
-  inset:  12pt,
-  above:  0pt,
+  inset:  (left: 10pt, rest: 0pt),
+  stroke: (left: 1.5pt + rgb("e2e8f0")),
+  above:  0.3em,
   below:  0.8em,
   body
 )
@@ -236,7 +227,7 @@
   above:  0.8em,
   below:  0pt,
   text(fill: palette.darker, weight: "bold", size: font.size)[
-    Solution #n#if title != none [#h(0.4em)—#h(0.4em)#title]
+    Solution #n#if title != none [#h(0.4em)---#h(0.4em)#title]
   ]
 )
 
@@ -257,7 +248,6 @@
 )
 
 // QR code for YouTube solution video — appears in the solution block
-// url should be the full YouTube URL e.g. "https://youtu.be/dQw4w9WgXcQ"
 #let sol-qr(url, label: none) = align(right,
   block(
     inset: 6pt,
@@ -288,7 +278,6 @@
   )
   v(4pt)
 }
-
 
 // ── 8. FIGURE HELPERS ─────────────────────────────────────────────────────────
 

@@ -127,14 +127,12 @@ function Pandoc(doc)
       end
     end
 
-    -- Exercise header bar
+    -- Exercise label and content (lightweight, no box)
     local title_arg = ex.title and ('"' .. ex.title .. '"') or "none"
     table.insert(output,
-      typst("#ex-header(p, " .. tostring(ex.number) .. ", " .. title_arg .. ")")
+      typst("#ex-label(p, " .. tostring(ex.number) .. ", " .. title_arg .. ")")
     )
-
-    -- Exercise body
-    table.insert(output, typst("#ex-body(p, ["))
+    table.insert(output, typst("#ex-content(["))
     for _, b in ipairs(ex.content) do
       table.insert(output, b)
     end

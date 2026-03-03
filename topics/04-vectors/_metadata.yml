@@ -1,11 +1,9 @@
 # Topic: Vectors & Linear Algebra
 # All .qmd files in this folder inherit these settings.
+# Filters are declared in each individual .qmd file's front matter.
 
 topic-key: "vectors"
 topic-title: "Vectors & Linear Algebra"
 institution: "Gymnasium -- Mathematics"
 
 exercise-reset-per-chapter: true
-
-filters:
-  - ../../shared/filters/exercise-solutions.lua
